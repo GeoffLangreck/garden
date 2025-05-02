@@ -1,5 +1,4 @@
-
-from Garden_data import save_garden_to_file
+import garden_data
 
 
 # -------------------------------
@@ -33,7 +32,7 @@ def update_plant_height(garden, zone_name, plant_name, new_height):
             print(f"{plant_name} was not found in {zone_name}.")
     else:
         print(f"{zone_name} not found.")
-    save_garden_to_file(garden)
+    garden_data.save_garden_to_file(garden)
 
 # -------------------------------
 # Update the color of a plant
@@ -49,7 +48,7 @@ def update_plant_color(garden, zone_name, plant_name, new_color):
             print(f"{plant_name} was not found in {zone_name}.")
     else:
         print(f"{zone_name} not found.")
-    save_garden_to_file(garden)
+    garden_data.save_garden_to_file(garden)
 
 # -------------------------------
 # Add zone to garden
@@ -61,7 +60,7 @@ def add_zone(garden):
     else:
         garden[zone_name] = {}
         print(f"Zone '{zone_name}' has been added.")
-        save_garden_to_file(garden)
+        garden_data.save_garden_to_file(garden)
 
 def add_plant(garden):
     zone_name = input("Which zone would you like to add to?").strip().title()
@@ -78,7 +77,7 @@ def add_plant(garden):
     new_type = input("Enter plant type (e.g., tree, flower, fruit): ").strip()
 
     try:
-        new_height = int(input("Enter plant height (ft): "))
+        new_height = float(input("Enter plant height (ft): "))
     except ValueError:
         print("invalid height.")
         return
@@ -92,7 +91,7 @@ def add_plant(garden):
     }
 
     print(f"{new_plant} added to {zone_name}.")
-    save_garden_to_file(garden)
+    garden_data.save_garden_to_file(garden)
 
 
 
