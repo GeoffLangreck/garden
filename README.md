@@ -1,33 +1,45 @@
-# Garden Manager
+This is a simple console application that helps manage a virtual garden. Plants are grouped by zones, and you can view, update, or add to your garden. It was built as a hands-on project to practice Python, especially working with nested dictionaries, file handling, and organizing code across multiple files.
 
-This is a console-based Python application for tracking and managing plant data. It allows users to view, update, and store information about different plants organized by garden zones.
+What It Does
+View the entire garden or look at specific zones or plants
 
-I built this project to practice core programming concepts like file handling, data structures, and user input—while also solving a real workflow need at my job.
+Add new zones or plants
 
-## Features
+Update a plant’s color or height
 
-- View plants by zone
-- Update a plant’s color or height
-- Save and load plant data to/from a JSON file
-- Menu-driven interface for easy navigation
+Automatically saves all changes to a JSON file
 
-## Technologies Used
+Why I Made It
+I wanted a project that helped me actually use what I’ve been learning in Python. This one gave me real practice with:
 
-- Python (console I/O, functions, dictionaries)
-- JSON (file-based data storage)
+Working with nested dictionaries
 
-## Future Improvements
+Saving and loading structured data using the json module
 
-- Add and remove plants
-- Search by plant type or color
-- Zone creation and deletion
-- Refactor into classes (OOP)
+Organizing code using functions and modules
 
-## How to Run
+Validating user input and handling errors
 
-1. Clone the repo
-2. Open the Python file (`garden.py`) in your editor
-3. Run it using your terminal or IDE
+Designing a usable menu system
 
-```bash
-python garden.py
+File Overview
+php
+Copy
+Edit
+garden/
+├── main.py             # Starts the program
+├── garden_data.py      # Loads and saves garden.json
+├── garden_menus.py     # Displays the menu and handles user input
+├── garden_core.py      # Core logic for garden actions
+├── default.py          # Fallback default garden if no file is found
+└── garden.json         # Saved garden data
+How to Run
+Make sure you have Python installed.
+
+Run the program with:
+
+bash
+Copy
+Edit
+python main.py
+If garden.json doesn't exist, it will use the default layout from default.py. Any updates you make are saved automatically.
