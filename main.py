@@ -1,6 +1,6 @@
 import json
 
-
+# Default garden data (used if no file exists or file is empty)
 garden = {
     "North Zone": {
         "Pine": {
@@ -28,49 +28,44 @@ garden = {
     }
 }
 
+
+# -------------------------------
+# Display a specific plant's details
+# -------------------------------
 def print_plant(zone_name, plant_name):
-    # Safely lookup the zone (use .get())
     zone = garden.get(zone_name)
-    # If zone exists:
     if zone:
         plant = zone.get(plant_name)
-        # Safely lookup the plant inside that zone
-        # If plant exists:
-            # Print type, height, and main color
         if plant:
             print(f"Type: {plant['type']}")
             print(f"Height (ft): {plant['height_ft']}")
             print(f"Main Color: {plant['main_color']}")
-        # Else:
         else:
-            print(f"{plant_name} not found in {zone_name}")
-            # Print "Plant not found in this zone."
-    # Else:
+            print(f"{plant_name} not found in {zone_name}.")
     else:
         print("Zone not found.")
-        # Print "Zone not found."
 
+
+# -------------------------------
+# Update the color of a plant
+# -------------------------------
 def update_plant_color(zone_name, plant_name, new_color):
-    # Safely check if zone and plant exist
     zone = garden.get(zone_name)
-
-    # If they exist:
     if zone:
         plant = zone.get(plant_name)
         if plant:
-        # Update the plant's "main_color" attribute
             plant["main_color"] = new_color
             print(f"Updated {plant_name}'s color to {new_color}.")
-        # Print confirmation
         else:
-            print(f"{plant_name} was not found in {zone_name}")
-
+            print(f"{plant_name} was not found in {zone_name}.")
     else:
         print(f"{zone_name} not found.")
-    # Else:
-        # Print appropriate error message
     save_garden_to_file(garden)
 
+
+# -------------------------------
+# Update the height of a plant
+# -------------------------------
 def update_plant_height(zone_name, plant_name, new_height):
     zone = garden.get(zone_name)
     if zone:
@@ -79,14 +74,15 @@ def update_plant_height(zone_name, plant_name, new_height):
             plant["height_ft"] = new_height
             print(f"Updated {plant_name}'s height to {new_height}.")
         else:
-            print(f"{plant_name} was not found in {zone_name}")
+            print(f"{plant_name} was not found in {zone_name}.")
     else:
         print(f"{zone_name} not found.")
     save_garden_to_file(garden)
 
 
-
-
+# -------------------------------
+# Display the entire garden by zone
+# -------------------------------
 def view_garden():
     for zone_name, plants in garden.items():
         print(f"Zone: {zone_name}")
@@ -97,65 +93,84 @@ def view_garden():
             print(f"        Main Color: {plant_info['main_color']}")
             print()
 
+
+# -------------------------------
+# Submenu for viewing garden information
+# -------------------------------
 def view_garden_options(garden):
     while True:
-        print("View Options\n1. View Entire Garden\n2. View specific zone\n3. View specific plant\n4. Main Menu")
+        print("View Options\n1. View Entire Garden\n2. View Specific Zone\n3. View Specific Plant\n4. Main Menu")
         choice = input("Enter choice (1-4): ")
+
         if choice == "1":
             view_garden()
+
         elif choice == "2":
-            for zone_name, plants in garden.items():
-                print(f"{zone_name}")
+            for zone_name in garden.keys():
+                print(zone_name)
+
         elif choice == "3":
             zone_name = input("Which zone: ")
             zone = garden.get(zone_name)
             if not zone:
                 print("Zone not found.")
                 return
-            else:
-                plant_name = input("Which plant: ")
-                plant = zone.get(plant_name)
-                if not plant:
-                    print("Plant not found.")
-                    return
-                else:
-                    print(f"{plant_name}")
-                    print(plant['type'])
-                    print(plant['height_ft'])
-                    print(plant['main_color'])
+            plant_name = input("Which plant: ")
+            plant = zone.get(plant_name)
+            if not plant:
+                print("Plant not found.")
+                return
+            print(f"{plant_name}")
+            print(f"Type: {plant['type']}")
+            print(f"Height (ft): {plant['height_ft']}")
+            print(f"Main Color: {plant['main_color']}")
+
         elif choice == "4":
-            menu()
+            return
+
         else:
             print("Invalid. Please choose (1-4)")
 
 
-
+# -------------------------------
+# Save garden data to a JSON file
+# -------------------------------
 def save_garden_to_file(garden):
-    file_path = r"C:\Users\STUPID TOES\OneDrive\Documents\garden.json"
-
+    file_path = "garden.json"
     with open(file_path, "w") as f:
         json.dump(garden, f)
 
+
+# -------------------------------
+# Load garden data from a JSON file
+# -------------------------------
 def load_garden_from_file():
-    file_path = r"C:\Users\STUPID TOES\OneDrive\Documents\garden.json"
+    file_path = "garden.json"
     try:
         with open(file_path, "r") as f:
             loaded_garden = json.load(f)
         return loaded_garden
     except FileNotFoundError:
-        print("Error: File not found.")
-        return{}
+        print("Error: File not found. Starting with default garden.")
+        return {}
     except json.JSONDecodeError:
+        print("Error: Corrupted file. Starting with default garden.")
         return {}
 
+
+# -------------------------------
+# Display the main menu
+# -------------------------------
 def print_main_menu():
     print("1. View Garden.")
-    print("2. Update plant color.")
+    print("2. Update Plant Color.")
     print("3. Update Plant Height.")
     print("4. Exit")
 
 
-
+# -------------------------------
+# Handle main menu choices
+# -------------------------------
 def handle_menu_choice():
     while True:
         try:
@@ -164,7 +179,6 @@ def handle_menu_choice():
 
             if choice == "1":
                 view_garden_options(garden)
-
             elif choice == "2":
                 zone_name = input("Enter the zone name: ")
                 plant_name = input("Enter the plant name: ")
@@ -176,7 +190,7 @@ def handle_menu_choice():
                 new_height = int(input("Enter new height: "))
                 update_plant_height(zone_name, plant_name, new_height)
             elif choice == "4":
-                print("Exiting Program")
+                print("Exiting program.")
                 break
             else:
                 print("Invalid choice.")
@@ -184,8 +198,10 @@ def handle_menu_choice():
             print(f"Error: {e}")
 
 
+# -------------------------------
+# Program entry point
+# -------------------------------
 garden = load_garden_from_file()
 handle_menu_choice()
 save_garden_to_file(garden)
-
 
