@@ -5,7 +5,7 @@ import json
 # Load garden data from a JSON file
 # -------------------------------
 def load_garden_from_file():
-    file_path = "garden.json"
+    file_path = r"C:\Users\STUPID TOES\OneDrive\Documents\garden.json"
     try:
         with open(file_path, "r") as f:
             loaded_garden = json.load(f)
@@ -22,7 +22,7 @@ def load_garden_from_file():
 # Save garden data to a JSON file
 # -------------------------------
 def save_garden_to_file(garden):
-    file_path = "garden.json"
+    file_path = r"C:\Users\STUPID TOES\OneDrive\Documents\garden.json"
     with open(file_path, "w") as f:
         json.dump(garden, f)
 
